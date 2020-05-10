@@ -31,6 +31,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Rectangle car;
 	private Random rand;
 	private boolean stopGame = false;
+	private int points;
 	BufferedImage bg ,bg1, road1, road2, road3;
 	Timer t ; 
 	public Game() {
@@ -90,6 +91,7 @@ public void addocars(boolean first ) {
 
 
 	public void paintComponent(Graphics g ) {
+		Font font = new Font("Verdana", Font.BOLD, 12);
 		super.paintComponents(g);
 		Graphics2D g2 = (Graphics2D)g;
 		g.setColor(Color.green);
@@ -110,11 +112,15 @@ public void addocars(boolean first ) {
 		}
 		
 		if(this.stopGame) {
-			Font font = new Font("Verdana", Font.BOLD, 12);
 			g.setFont(font);
 			g.setColor(Color.BLACK);
 			g.drawString("Crashed, game finished!", 40, 100);
 		}
+		
+		g.setFont(font);
+		g.setColor(Color.RED);
+		g.drawString("Points: " + this.points, 40, 130);
+
 
 		
 	}
@@ -145,6 +151,11 @@ public void addocars(boolean first ) {
 			if(rect.y+rect.height > height ) {
 				ocars.remove(rect);
 				addocars(false);
+			}
+			if(rect.y+rect.height > car.y ) {
+				System.out.println("CAR Konumu: " + car.y);
+				System.out.println("ENGEL Konumu: " + rect.y);
+				this.points += 10;
 			}
 		}
 
