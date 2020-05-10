@@ -30,6 +30,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private ArrayList<Rectangle> ocars ; 
 	private Rectangle car;
 	private Random rand;
+	private boolean stopGame = false;
 	BufferedImage bg ,bg1, road1, road2, road3;
 	Timer t ; 
 	public Game() {
@@ -39,7 +40,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			road1 = ImageIO.read(new File("src/RacingProject/road.png"));
 			road2 = ImageIO.read(new File("src/RacingProject/road.png"));
 			road3 = ImageIO.read(new File("src/RacingProject/road.png"));
-				
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,11 +56,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		addocars(true);
 		addocars(true);
 		addocars(true);
-		
 		t.restart();
 	}
-public void addocars(boolean first )
-{
+public void addocars(boolean first ) {
 	
 	int positionx = rand.nextInt()%3 ; 
 	System.out.println(positionx);
@@ -89,8 +87,9 @@ public void addocars(boolean first )
 	}
 	
 }
-	public void paintComponent(Graphics g )
-	{
+
+
+	public void paintComponent(Graphics g ) {
 		super.paintComponents(g);
 		Graphics2D g2 = (Graphics2D)g;
 		g.setColor(Color.green);
@@ -109,13 +108,20 @@ public void addocars(boolean first )
 			//g.fillRect(rect.x, rect.y, rect.width, rect.height);
 			g.drawImage(bg1, rect.x , rect.y , null);
 		}
+		
+		if(this.stopGame) {
+			Font font = new Font("Verdana", Font.BOLD, 12);
+			g.setFont(font);
+			g.setColor(Color.BLACK);
+			g.drawString("Crashed, game finished!", 40, 100);
+		}
 
 		
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Rectangle rect ; 
-		 count++;
+		Rectangle rect ;
+		count++;
 		for(int i = 0 ; i < ocars.size(); i ++){
 			rect = ocars.get(i);
 			if(count % 1000 == 0 ) {
@@ -128,7 +134,10 @@ public void addocars(boolean first )
 		}
 		for(Rectangle r:ocars) {
 			if(r.intersects(car)) {
-				car.y = r.y+h;		
+				//car.y = r.y+h;
+				System.out.println("Crashed!!!");
+				this.stopGame = true;
+				t.stop();
 			}
 		}
 		for(int i = 0 ; i < ocars.size(); i++) {
