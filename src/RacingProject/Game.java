@@ -163,22 +163,22 @@ public void addocars(boolean first ) {
 		
 	}
 	
-	public void moveUp() {
-		if(car.y-move < 0 ) {
-			
-		}else {
-			car.y -= move;
-		}
-	}
-	
-
-	public void moveDown() {
-		if(car.y+move+car.height>height - 1  ) {
-			
-		}else {
-			car.y += move;
-		}
-	}
+//	public void moveUp() {
+//		if(car.y-move < 0 ) {
+//			
+//		}else {
+//			car.y -= move;
+//		}
+//	}
+//	
+//
+//	public void moveDown() {
+//		if(car.y+move+car.height>height - 1  ) {
+//			
+//		}else {
+//			car.y += move;
+//		}
+//	}
 	
 
 	public void moveLeft() {
@@ -212,10 +212,10 @@ public void addocars(boolean first ) {
 		int key = e.getKeyCode();
 		switch(key) {
 		case KeyEvent.VK_UP:
-			moveUp();
+			//moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
-			moveDown();
+			//moveDown();
 			break;
 		case KeyEvent.VK_LEFT:
 			moveLeft();
