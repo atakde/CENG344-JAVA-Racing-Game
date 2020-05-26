@@ -12,7 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer ; 
 import java.awt.event.KeyListener; 
 import java.awt.Image;
@@ -111,11 +114,11 @@ public void addocars(boolean first ) {
 			g.drawImage(bg1, rect.x , rect.y , null);
 		}
 		
-		if(this.stopGame) {
-			g.setFont(font);
-			g.setColor(Color.BLACK);
-			g.drawString("Crashed, game finished!", 40, 100);
-		}
+//		if(this.stopGame) {
+//			g.setFont(font);
+//			g.setColor(Color.BLACK);
+//			g.drawString("Crashed, game finished!", 40, 100);
+//		}
 		
 		g.setFont(font);
 		g.setColor(Color.RED);
@@ -143,6 +146,22 @@ public void addocars(boolean first ) {
 				//car.y = r.y+h;
 				System.out.println("Crashed!!!");
 				this.stopGame = true;
+				if(this.stopGame == true) {
+					System.out.println("Panele girdi!");
+					Panel panel=new Panel();  
+					
+					JLabel l1 = new JLabel("Game over, you can restart it :)");
+					panel.add(l1);
+			        
+					panel.setBounds(0,300,700,50);    
+			        panel.setBackground(Color.gray);  
+			        
+			        Button b1=new Button("Restart");  
+			        b1.addActionListener(this);
+			        b1.setBackground(Color.green);
+			        panel.add(b1);
+			        add(panel);  
+				}
 				t.stop();
 			}
 		}
@@ -158,18 +177,28 @@ public void addocars(boolean first ) {
 				this.points += 10;
 			}
 		}
+		
+		 if (e.getActionCommand() == "Restart") {
+			
+			Window a = SwingUtilities.getWindowAncestor(this);
+			a.setVisible(false);
+
+	 		JFrame app = new JFrame();
+	 		Game w = new Game();
+	 		app.add(w);
+	 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 		app.setSize(700,720);
+	 		app.setVisible(true);	 	
+
+		}
 
 		repaint();
 		
 	}
 	
-//	public void moveUp() {
-//		if(car.y-move < 0 ) {
-//			
-//		}else {
-//			car.y -= move;
-//		}
-//	}
+	public void moveUp() {
+		System.out.println("BOMBOMBOM!!");
+	}
 //	
 //
 //	public void moveDown() {
@@ -212,7 +241,7 @@ public void addocars(boolean first ) {
 		int key = e.getKeyCode();
 		switch(key) {
 		case KeyEvent.VK_UP:
-			//moveUp();
+			moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
 			//moveDown();
