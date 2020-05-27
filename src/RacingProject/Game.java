@@ -34,6 +34,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Random rand;
 	private boolean stopGame = false;
 	private int points;
+	private int StarPoints = 0;
 	BufferedImage bg, bg1, road1, road2, road3;
 	Timer t;
 
@@ -53,7 +54,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		ocars = new ArrayList<Rectangle>();
 		starList = new ArrayList<star>();
 		car = new Rectangle(width / 2 - 90, height - 100, w, h);
-		space = 300; // diðer arabanýn gelme süresi
+		space = 300; // diÃ°er arabanÃ½n gelme sÃ¼resi
 		speed = 2;
 		addKeyListener(this);
 		setFocusable(true);
@@ -172,7 +173,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g2.fillPolygon(b1);
 			g2.fillPolygon(b2);
 		}
-
 		// road
 		g.drawImage(road1, 200, 0, null);
 		g.drawImage(road2, 300, 0, null);
@@ -196,10 +196,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		for (Rectangle rect : ocars) {
 			g.drawImage(bg1, rect.x, rect.y, null);
 		}
-
 		g.setFont(font);
 		g.setColor(Color.RED);
 		g.drawString("Points: " + this.points, 10, 20);
+		g.drawString("Star Points: " + this.StarPoints, 580, 20);
 
 	}
 
@@ -217,7 +217,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			rect.y += speed;
 		}
-
 		star q;
 		for (int j = 0; j < starList.size(); j++) {
 			q = starList.get(j);
@@ -263,8 +262,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if (car.intersects(q.points[0][0], q.points[0][1], 1, 1)
 					|| car.intersects(q.points[8][0], q.points[8][1], 1, 1)
 					|| car.intersects(q.points[6][0], q.points[6][1], 1, 1)) {
-				System.out.println("Yýldýza çarptý!");
-				this.points += 50;
+				System.out.println("YÃ½ldÃ½za Ã§arptÃ½!");
+				this.StarPoints += 1;
 				starList.remove(q);
 				addstars(false);
 			}
@@ -284,7 +283,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		for (int i = 0; i < starList.size(); i++) {
 			q = starList.get(i);
 			if (q.points[0][1] > height) {
-				System.out.println("Yeni yýldýz üretildi!");
+				System.out.println("Yeni yÃ½ldÃ½z Ã¼retildi!");
 				starList.remove(q);
 				addstars(false);
 			}
