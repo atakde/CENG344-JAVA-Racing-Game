@@ -72,65 +72,6 @@ public class Tree
 
 	}
 	
-	
-	public void setX(int[] x) {
-		this.x = x;
-	}
-
-	public void setY(int[] y) {
-		this.y = y;
-	}
-
-
-	public int[] getTriX() {
-		return triX;
-	}
-
-	public void setTriX(int[] triX) {
-		this.triX = triX;
-	}
-
-	public int[] getTriY() {
-		return triY;
-	}
-
-	public void setTriY(int[] triY) {
-		this.triY = triY;
-	}
-
-	public int[] getTriX1() {
-		return triX1;
-	}
-
-	public void setTriX1(int[] triX1) {
-		this.triX1 = triX1;
-	}
-
-	public int[] getTriY1() {
-		return triY1;
-	}
-
-	public void setTriY1(int[] triY1) {
-		this.triY1 = triY1;
-	}
-
-	public int[] getTriX2() {
-		return triX2;
-	}
-
-	public void setTriX2(int[] triX2) {
-		this.triX2 = triX2;
-	}
-
-	public int[] getTriY2() {
-		return triY2;
-	}
-
-	public void setTriY2(int[] triY2) {
-		this.triY2 = triY2;
-	}
-	
-
 }
 
 

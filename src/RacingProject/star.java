@@ -61,12 +61,5 @@ public class star extends Frame {
 		
 	
 	}
-	
-	 public void paint(Graphics g)
-	 {
-		 Graphics2D Graph = (Graphics2D) g;
-		 
-	
-	 }
 
 }

@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 public class Game extends JPanel implements ActionListener, KeyListener {
 	ArrayList<Tree> treeList = new ArrayList<Tree>();
 	ArrayList<star> starList;
+	
 	private int w = 60;
 	private int h = 55;
 	private int move = 20;
@@ -35,6 +36,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private boolean stopGame = false;
 	private int points;
 	private int StarPoints = 0;
+	
 	BufferedImage bg, bg1, road1, road2, road3;
 	Timer t;
 
@@ -91,7 +93,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void tree(int i, int j) {
 		Tree a = new Tree(i, j);
 		treeList.add(a);
-
 	}
 
 	public void addocars(boolean first) {
