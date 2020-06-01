@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,10 +23,9 @@ import java.awt.image.BufferedImage;
 public class Game extends JPanel implements ActionListener, KeyListener {
 	ArrayList<Tree> treeList = new ArrayList<Tree>();
 	ArrayList<star> starList;
-	
 	private int w = 60;
 	private int h = 55;
-	private int move = 20;
+	private int move = 30;
 	private int count = 1;
 	private int space;
 	private int speed;
@@ -36,9 +37,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private boolean stopGame = false;
 	private int points;
 	private int StarPoints = 0;
-	
 	BufferedImage bg, bg1, road1, road2, road3;
 	Timer t;
+	int health = 0 ; 
+	int s_count = 0 ; 
 
 	public Game() {
 		try {
@@ -61,6 +63,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 
+		addocars(true);
+		addocars(true);
+		addocars(true);
+		addocars(true);
 		addocars(true);
 		addocars(true);
 		addocars(true);
@@ -93,6 +99,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void tree(int i, int j) {
 		Tree a = new Tree(i, j);
 		treeList.add(a);
+
 	}
 
 	public void addocars(boolean first) {
@@ -200,21 +207,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		g.setFont(font);
 		g.setColor(Color.RED);
 		g.drawString("Points: " + this.points, 10, 20);
-		g.drawString("Star Points: " + this.StarPoints, 580, 20);
+		g.drawString("Health: " + this.health , 580, 20);
+		g.drawString("Star Points: " + this.StarPoints, 580, 40);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		Rectangle rect;
 		count++;
 		for (int i = 0; i < ocars.size(); i++) {
 			rect = ocars.get(i);
 			if (count % 1000 == 0) {
 				speed++;
-				if (move < 50) {
-					move += 10;
-				}
+				
 			}
 			rect.y += speed;
 		}
@@ -234,17 +241,24 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			q.points[10][1] += speed;
 		}
 		for (Rectangle r : ocars) {
+			
 			if (r.intersects(car)) {
+				
 				// car.y = r.y+h;
-				System.out.println("Crashed!!!");
+				if(health <= 0 ) {
+					
+				
 				this.stopGame = true;
 				if (this.stopGame == true) {
-					System.out.println("Panele girdi!");
+					
 					Panel panel = new Panel();
+				
 
-					JLabel l1 = new JLabel("Game over, you can restart it :)");
+					JLabel l1 = new JLabel("<html> GAME OVER! <br> Hint:Every 5 stars gives you a extra health!  <br> <html> " );
+					
+					
 					panel.add(l1);
-
+					
 					panel.setBounds(0, 300, 700, 50);
 					panel.setBackground(Color.gray);
 
@@ -255,15 +269,34 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 					add(panel);
 				}
 				t.stop();
+				}
+				
+				if(health >= 1 ) {
+					System.out.println("*");
+					if(ocars.size()!= 0 ) {
+						ocars.remove(r);
+						addocars(true);
+					}
+										
+					health--;
+					break;
+				}
 			}
 		}
 
+		
 		for (int j = 0; j < starList.size(); j++) {
 			q = starList.get(j);
 			if (car.intersects(q.points[0][0], q.points[0][1], 1, 1)
 					|| car.intersects(q.points[8][0], q.points[8][1], 1, 1)
 					|| car.intersects(q.points[6][0], q.points[6][1], 1, 1)) {
-				System.out.println("Yýldýza çarptý!");
+				s_count++;
+				if(s_count == 5) {
+					health++;
+					s_count = 0; 
+					this.StarPoints -= 5 ;// every 5 star gives 1 health and resfresh star points 
+				}
+					
 				this.StarPoints += 1;
 				starList.remove(q);
 				addstars(false);
@@ -284,7 +317,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		for (int i = 0; i < starList.size(); i++) {
 			q = starList.get(i);
 			if (q.points[0][1] > height) {
-				System.out.println("Yeni yýldýz üretildi!");
+				
 				starList.remove(q);
 				addstars(false);
 			}
@@ -308,10 +341,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	public void moveLeft() {
-		if (car.x - move < 200) {
 
-		} else {
+	public void moveLeft() {
+		if(car.x - move < 200 ) {
+			
+		}else {
 			car.x -= move;
 		}
 	}
